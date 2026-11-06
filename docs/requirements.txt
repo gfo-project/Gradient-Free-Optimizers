@@ -20,5 +20,5 @@ scikit-learn
 matplotlib
 
 # For plot generation
-plotly>=7.0.0
+plotly>=7.1.0
 kaleido==1.3.0
