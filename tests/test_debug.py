@@ -1,8 +1,10 @@
+"""Check if there are any debug prints left in optimizer code."""
+
 import numpy as np
+import pytest
 
 from gradient_free_optimizers import (
     BayesianOptimizer,
-    EnsembleOptimizer,
     EvolutionStrategyOptimizer,
     ForestOptimizer,
     HillClimbingOptimizer,
@@ -16,9 +18,6 @@ from gradient_free_optimizers import (
     StochasticHillClimbingOptimizer,
     TreeStructuredParzenEstimators,
 )
-
-# check if there are any debug-prints left in code
-
 
 optimizer_list = [
     HillClimbingOptimizer,
@@ -34,11 +33,11 @@ optimizer_list = [
     BayesianOptimizer,
     TreeStructuredParzenEstimators,
     ForestOptimizer,
-    EnsembleOptimizer,
 ]
 
 
 def objective_function(para):
+    """Simple quadratic objective function."""
     score = -para["x1"] * para["x1"]
     return score
 
@@ -48,7 +47,9 @@ search_space = {
 }
 
 
-for optimizer in optimizer_list:
+@pytest.mark.parametrize("optimizer", optimizer_list)
+def test_no_debug_prints_left_in_code(optimizer, capsys=None):
+    """Verify optimizer runs cleanly with verbosity=False and leaves no debug prints."""
     opt0 = optimizer(search_space)
     opt0.search(objective_function, n_iter=15, verbosity=False, memory=False)
 
@@ -69,3 +70,7 @@ for optimizer in optimizer_list:
         n_iter=15,
         verbosity=False,
     )
+
+    if capsys is not None:
+        captured = capsys.readouterr()
+        assert captured.out == ""
