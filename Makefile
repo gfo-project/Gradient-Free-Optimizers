@@ -46,7 +46,7 @@ test-gfo:
 
 test-examples:
 	cd tests; \
-		python _test_examples.py
+		python test_examples.py
 
 test-hyper:
 	# test if new version of gfo works with current release of hyperactive
