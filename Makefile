@@ -56,7 +56,7 @@ test-hyper:
 		make test
 
 test-timings:
-	python -m pytest -x -p no:warnings -rfEX tests/_test_memory.py
+	python -m pytest -x -p no:warnings -rfEX tests/test_memory.py
 	python -m pytest -x -p no:warnings -rfEX tests/test_main/test_optimizers/_test_max_time.py
 	python -m pytest -x -p no:warnings -rfEX tests/test_main/test_optimizers/_test_memory_warm_start.py
 
