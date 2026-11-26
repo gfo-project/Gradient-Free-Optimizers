@@ -191,8 +191,8 @@ class HillClimbingOptimizer(BaseOptimizer):
         max_positions = bounds[:, 1]
         sigmas = max_positions * self.epsilon
 
-        # Prevent zero sigma for single-value dimensions
-        sigmas = maximum(sigmas, 1e-10)
+        # Prevent getting stuck: ensure noise standard deviation is at least 1.0 index
+        sigmas = maximum(sigmas, 1.0)
 
         # Generate noise using the configured distribution
         noise_fn = self._DISTRIBUTIONS[self.distribution]
